@@ -27,8 +27,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (com.google.firebase.FirebaseApp.getApps(this).isEmpty()) {
+        try {
             com.google.firebase.FirebaseApp.initializeApp(this)
+        } catch (e: Exception) {
+            // Already initialized, ignore
         }
         enableEdgeToEdge()
 
