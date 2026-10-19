@@ -531,23 +531,26 @@ class AuthViewModel(
     }
 
     private fun registerFcmToken(userId: String) {
-        android.util.Log.d("AuthViewModel", "Attempting to register FCM token for user: $userId")
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val token = task.result
-                android.util.Log.d("AuthViewModel", "FCM token retrieved successfully")
-                if (token != null) {
-                    viewModelScope.launch {
-                        val result = noticeRepo.updateFcmToken(userId, token)
-                        if (result.isSuccess) {
-                            android.util.Log.d("AuthViewModel", "FCM token updated in Firestore successfully")
-                        } else {
-                            android.util.Log.e("AuthViewModel", "FCM token update in Firestore failed", result.exceptionOrNull())
+        viewModelScope.launch {
+            kotlinx.coroutines.delay(2000L) // Wait for Firebase to warm up
+            android.util.Log.d("AuthViewModel", "Attempting to register FCM token for user: $userId")
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    android.util.Log.d("AuthViewModel", "FCM token retrieved successfully")
+                    if (token != null) {
+                        viewModelScope.launch {
+                            val result = noticeRepo.updateFcmToken(userId, token)
+                            if (result.isSuccess) {
+                                android.util.Log.d("AuthViewModel", "FCM token updated in Firestore successfully")
+                            } else {
+                                android.util.Log.e("AuthViewModel", "FCM token update in Firestore failed", result.exceptionOrNull())
+                            }
                         }
                     }
+                } else {
+                    android.util.Log.e("AuthViewModel", "FCM token retrieval failed: ${task.exception?.message}", task.exception)
                 }
-            } else {
-                android.util.Log.e("AuthViewModel", "FCM token retrieval failed: ${task.exception?.message}", task.exception)
             }
         }
     }
