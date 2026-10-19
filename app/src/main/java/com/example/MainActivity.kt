@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     authViewModel = com.example.ui.auth.AuthViewModelFactory(context.applicationContext as android.app.Application)
                         .create(AuthViewModel::class.java)
                 } catch (e: Exception) {
-                    error = "অ্যাপ্লিকেশন লোড করতে ব্যর্থ হয়েছে"
+                    error = "অ্যাপ্লিকেশন লোড করতে ব্যর্থ হয়েছে: ${e.localizedMessage ?: "Unknown Error"}"
                 }
             }
 
