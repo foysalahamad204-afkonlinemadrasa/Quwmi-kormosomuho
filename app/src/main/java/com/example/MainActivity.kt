@@ -27,11 +27,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        try {
-            com.google.firebase.FirebaseApp.initializeApp(this)
-        } catch (e: Exception) {
-            // Already initialized, ignore
-        }
         enableEdgeToEdge()
 
         val noticeId = intent.getStringExtra("noticeId")

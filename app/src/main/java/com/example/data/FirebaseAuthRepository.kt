@@ -19,8 +19,9 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthRepository(
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val authProvider: () -> FirebaseAuth = { FirebaseAuth.getInstance() }
 ) {
+    private val auth by lazy { authProvider() }
     val authStateFlow: Flow<FirebaseUser?> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             trySend(firebaseAuth.currentUser)
