@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Islamic Arch Dome -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,23 C52,25 45,30 42,37 C39,43 39,49 39,53 L69,53 C69,49 69,43 66,37 C63,30 56,25 54,23 Z" />
+
+    <!-- Minaret Pinnacle Finial -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M53,19 L55,19 L55,23 L53,23 Z M54,16 A2,2 0 1,0 54,20 A2,2 0 1,0 54,16 Z" />
+
+    <!-- Central Crescent & Star inside Arch -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M53.5,33 C56,33 58,35 58,38 C58,40.5 56,42.5 53.5,42.5 C52.5,42.5 51.5,42.2 50.8,41.6 C52.8,41.2 54.2,39.5 54.2,37.8 C54.2,36 52.8,34.4 50.8,34 C51.5,33.4 52.5,33 53.5,33 Z" />
+
+    <!-- Open Holy Quran / Kitab on Rehal Stand -->
+    <!-- Left Page -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M53,56 C46,54 36,54 32,57 C31.4,57.5 31,58.3 31,59.2 L31,71.2 C31,71.9 31.6,72.5 32.3,72.4 C36.5,69.5 46,69.5 53,72 L53,56 Z" />
+
+    <!-- Right Page -->
+    <path
+        android:fillColor="#F5F5F5"
+        android:pathData="M55,56 C62,54 72,54 76,57 C76.6,57.5 77,58.3 77,59.2 L77,71.2 C77,71.9 76.4,72.5 75.7,72.4 C71.5,69.5 62,69.5 55,72 L55,56 Z" />
+
+    <!-- Page Line Details -->
+    <path
+        android:fillColor="#A10F0F"
+        android:pathData="M35,62 L50,62 L50,63 L35,63 Z M35,65 L48,65 L48,66 L35,66 Z M58,62 L73,62 L73,63 L58,63 Z M60,65 L73,65 L73,66 L60,66 Z" />
+
+    <!-- Crossed Rehal Stand (Wooden Quran Stand) Base -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M37,74 L49,86 L53,86 L43,74 Z M71,74 L59,86 L55,86 L65,74 Z M48,85 L60,85 L54,80 Z" />
+
+    <!-- Neumorphic Soft Glow Ring -->
+    <path
+        android:strokeColor="#40FFFFFF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:pathData="M54,12 A42,42 0 1,0 54,96 A42,42 0 1,0 54,12 Z" />
+</vector>

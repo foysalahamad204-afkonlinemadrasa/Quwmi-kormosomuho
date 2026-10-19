@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'foysalahamad102@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isNoticeOwner(noticeId) {
+      return isAuthenticated() && resource.data.createdBy == request.auth.token.email;
+    }
+
+    function isNoticeOwnerOf(noticeId) {
+      return isAuthenticated() && exists(/databases/$(database)/documents/notices/$(noticeId)) &&
+             get(/databases/$(database)/documents/notices/$(noticeId)).data.createdBy == request.auth.token.email;
+    }
+
+    // খেদমতের বিজ্ঞপ্তি ও ঘোষণা
+    match /notices/{noticeId} {
+      allow read: if isAuthenticated() && (
+        resource.data.status == 'published' || 
+        isAdmin() || 
+        isNoticeOwner(noticeId)
+      );
+      
+      allow create: if isAuthenticated() && (
+        isAdmin() || (
+          request.resource.data.status == 'pending' &&
+          request.resource.data.createdBy == request.auth.token.email &&
+          request.resource.data.isBoosted == false &&
+          request.resource.data.notificationSent == false
+        )
+      );
+      
+      allow update: if isAdmin() || (
+        isNoticeOwner(noticeId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['boostRequested', 'isOnlineApplication'])
+      );
+      
+      allow delete: if isAdmin();
+    }
+
+    // আবেদনসমূহ
+    match /applications/{applicationId} {
+      allow read: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || isAdmin()
+      );
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update: if isAdmin() || (
+        isNoticeOwnerOf(request.resource.data.noticeId) && 
+        request.resource.data.diff(resource.data).affectedKeys().hasAny(['status', 'adminFeedback'])
+      );
+    }
+
+    // FCM টোকেন ব্যবস্থাপনা
+    match /fcm_tokens/{userId} {
+      allow read: if isAdmin();
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // অনুমোদিত অ্যাডমিন তালিকা
+    match /admins/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // অ্যাডমিন কার্যক্রম ও বুস্ট ট্র্যাকিং লগ
+    match /admin_logs/{logId} {
+      allow read: if isAdmin();
+      allow create: if isAdmin() && request.auth.uid == request.resource.data.adminId;
+      allow update, delete: if false; // অপরিবর্তনীয় অডিট লগ
+    }
+
+    // ব্যবহারকারীর সংরক্ষিত বিজ্ঞপ্তি
+    match /users/{userId}/saved_notices/{noticeId} {
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+  }
+}

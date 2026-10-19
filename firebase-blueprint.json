@@ -1,0 +1,63 @@
+{
+  "entities": {
+    "Notice": {
+      "path": "notices/{noticeId}",
+      "description": "কওমি মাদরাসা ও দ্বীনি প্রতিষ্ঠানের খেদমতের বিজ্ঞপ্তি ও ঘোষণা",
+      "fields": {
+        "title": { "type": "string", "description": "বিজ্ঞপ্তির শিরোনাম" },
+        "instituteName": { "type": "string", "description": "প্রতিষ্ঠানের নাম" },
+        "role": { "type": "string", "description": "খেদমতের দায়িত্ব বা পদের নাম" },
+        "qualifications": { "type": "string", "description": "যোগ্যতা ও অভিজ্ঞতা" },
+        "location": { "type": "string", "description": "কর্মস্থল" },
+        "remuneration": { "type": "string", "description": "হাদিয়া বা সুযোগ-সুবিধা" },
+        "deadline": { "type": "string", "description": "আবেদনের শেষ তারিখ" },
+        "applicationInstructions": { "type": "string", "description": "আবেদনের নিয়ম ও যোগাযোগের তথ্য" },
+        "contactPhone": { "type": "string", "description": "মোবাইল নম্বর" },
+        "contactEmail": { "type": "string", "description": "ইমেইল" },
+        "publishedDate": { "type": "string", "description": "প্রকাশের তারিখ" },
+        "timestamp": { "type": "number", "description": "টাইমস্ট্যাম্প (মিলিসেকেন্ড)" },
+        "description": { "type": "string", "description": "বিজ্ঞপ্তির সম্পূর্ণ বিবরণ" },
+        "status": { "type": "string", "description": "অবস্থা: published, draft, expired" },
+        "isImportant": { "type": "boolean", "description": "গুরুত্বপূর্ণ বিজ্ঞপ্তি ফ্ল্যাগ" },
+        "isBoosted": { "type": "boolean", "description": "বুস্টেড অবস্থা" },
+        "boostStartedAt": { "type": "number", "description": "বুস্ট শুরুর সময়" },
+        "boostExpiresAt": { "type": "number", "description": "বুস্ট শেষের সময়" },
+        "boostDurationDays": { "type": "number", "description": "বুস্টের মেয়াদ (দিন)" },
+        "attachmentUrl": { "type": "string", "description": "ছবি বা পিডিএফ লিংক" },
+        "attachmentType": { "type": "string", "description": "সংযুক্তির ধরন: image, pdf, none" },
+        "createdBy": { "type": "string", "description": "বিজ্ঞপ্তি প্রস্তুতকারী অ্যাডমিন" }
+      }
+    },
+    "Admin": {
+      "path": "admins/{userId}",
+      "description": "অনুমোদিত অ্যাডমিন অ্যাকাউন্ট",
+      "fields": {
+        "email": { "type": "string", "description": "অ্যাডমিন ইমেইল" },
+        "role": { "type": "string", "description": "ভূমিকা (admin)" },
+        "grantedAt": { "type": "number", "description": "অনুমোদনের তারিখ" }
+      }
+    },
+    "AdminLog": {
+      "path": "admin_logs/{logId}",
+      "description": "অ্যাডমিন কার্যক্রম ও বুস্ট পরিচালনার রেকর্ড",
+      "fields": {
+        "adminId": { "type": "string", "description": "অ্যাডমিন ইউজার আইডি" },
+        "adminEmail": { "type": "string", "description": "অ্যাডমিন ইমেইল" },
+        "action": { "type": "string", "description": "গৃহীত পদক্ষেপ" },
+        "noticeId": { "type": "string", "description": "বিজ্ঞপ্তি আইডি" },
+        "timestamp": { "type": "number", "description": "কার্যক্রমের সময়" },
+        "details": { "type": "string", "description": "বিবরণ" }
+      }
+    },
+    "SavedNotice": {
+      "path": "users/{userId}/saved_notices/{noticeId}",
+      "description": "ব্যবহারকারীর সংরক্ষিত বিজ্ঞপ্তি",
+      "fields": {
+        "noticeId": { "type": "string", "description": "বিজ্ঞপ্তি আইডি" },
+        "savedAt": { "type": "number", "description": "সংরক্ষণের সময়" },
+        "noticeTitle": { "type": "string", "description": "বিজ্ঞপ্তির শিরোনাম" },
+        "instituteName": { "type": "string", "description": "প্রতিষ্ঠানের নাম" }
+      }
+    }
+  }
+}

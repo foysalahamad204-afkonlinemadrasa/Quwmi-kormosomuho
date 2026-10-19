@@ -1,0 +1,6 @@
+{
+  "name": "কওমি কর্মসংস্থান বাংলাদেশ",
+  "description": "কওমি কর্মসংস্থান বাংলাদেশ - কওমি মাদরাসা শিক্ষক, ইমাম ও পেশাজীবীদের খেদমত ও কর্মসংস্থান প্ল্যাটফর্ম",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
