@@ -103,12 +103,18 @@ class NoticeRepository(
      * Get Firestore instance bound to the applet's provisioned named database ID
      */
     private fun getFirestore(): FirebaseFirestore? {
+        android.util.Log.d("NoticeRepository", "Attempting to get Firestore instance")
         return try {
             val dbId = context.getString(R.string.firestore_database_id)
+            android.util.Log.d("NoticeRepository", "Firestore DB ID resolved: $dbId")
             if (FirebaseApp.getApps(context).isNotEmpty() && dbId.isNotBlank()) {
                 FirebaseFirestore.getInstance(FirebaseApp.getInstance(), dbId)
-            } else null
-        } catch (_: Exception) {
+            } else {
+                android.util.Log.w("NoticeRepository", "FirebaseApp not initialized or DB ID blank")
+                null
+            }
+        } catch (e: Exception) {
+            android.util.Log.e("NoticeRepository", "Error getting Firestore instance", e)
             null
         }
     }
