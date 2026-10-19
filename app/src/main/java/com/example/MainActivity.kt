@@ -16,7 +16,12 @@ import com.example.ui.auth.AuthScreen
 import com.example.ui.auth.AuthViewModel
 import com.example.ui.theme.KaomiTheme
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.material3.Text
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 class MainActivity : ComponentActivity() {
@@ -28,16 +33,30 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val context = LocalContext.current
-            val authViewModel: AuthViewModel = viewModel(
-                factory = com.example.ui.auth.AuthViewModelFactory(context.applicationContext as android.app.Application)
-            )
-            val state by authViewModel.uiState.collectAsStateWithLifecycle()
+            var authViewModel by remember { mutableStateOf<AuthViewModel?>(null) }
+            var error by remember { mutableStateOf<String?>(null) }
 
-            KaomiTheme(darkTheme = state.isDarkMode) {
-                AuthScreen(
-                    viewModel = authViewModel,
-                    initialNoticeId = noticeId
-                )
+            LaunchedEffect(Unit) {
+                try {
+                    authViewModel = com.example.ui.auth.AuthViewModelFactory(context.applicationContext as android.app.Application)
+                        .create(AuthViewModel::class.java)
+                } catch (e: Exception) {
+                    error = "অ্যাপ্লিকেশন初始化 ব্যর্থ হয়েছে"
+                }
+            }
+
+            if (error != null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                    Text(text = error!!)
+                }
+            } else if (authViewModel != null) {
+                val state by authViewModel!!.uiState.collectAsStateWithLifecycle()
+                KaomiTheme(darkTheme = state.isDarkMode) {
+                    AuthScreen(
+                        viewModel = authViewModel!!,
+                        initialNoticeId = noticeId
+                    )
+                }
             }
         }
     }

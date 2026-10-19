@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">কওমি কর্মসংস্থান বাংলাদেশ</string>
     <string name="app_name_en">Kaomi Kormosongsthan Bangladesh</string>
-    <string name="default_web_client_id">dummy_client_id_for_build</string>
+    <string name="default_web_client_id" translatable="false">965861087688-ohi5fs9r30h7e57kg3u5vetvmkg9j48v.apps.googleusercontent.com</string>
 </resources>
