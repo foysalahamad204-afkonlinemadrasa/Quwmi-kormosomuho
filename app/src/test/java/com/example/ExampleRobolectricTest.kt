@@ -43,7 +43,8 @@ class ExampleRobolectricTest {
 
   @Test
   fun `auth viewmodel initial state and text input handling`() {
-    val viewModel = AuthViewModel()
+    val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+    val viewModel = AuthViewModel(app)
     val initialState = viewModel.uiState.value
     assertFalse(initialState.isFlippedToRegister)
     assertFalse(initialState.isTermsAccepted)
@@ -81,7 +82,8 @@ class ExampleRobolectricTest {
 
   @Test
   fun `terms and privacy consent prevents login when unchecked`() {
-    val viewModel = AuthViewModel()
+    val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+    val viewModel = AuthViewModel(app)
     assertFalse(viewModel.uiState.value.isTermsAccepted)
 
     // Attempt login without accepting terms
@@ -100,7 +102,8 @@ class ExampleRobolectricTest {
 
   @Test
   fun `terms and privacy modals open and close correctly`() {
-    val viewModel = AuthViewModel()
+    val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+    val viewModel = AuthViewModel(app)
 
     viewModel.showTermsModal(true)
     assertTrue(viewModel.uiState.value.showTermsModal)
@@ -117,7 +120,8 @@ class ExampleRobolectricTest {
 
   @Test
   fun `login validation checks required fields after accepting terms`() {
-    val viewModel = AuthViewModel()
+    val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+    val viewModel = AuthViewModel(app)
     viewModel.updateTermsAccepted(true)
     viewModel.onLoginClick()
     val errorState = viewModel.uiState.value
@@ -147,7 +151,8 @@ class ExampleRobolectricTest {
 
   @Test
   fun `dark mode and guest mode toggle correctly in auth viewmodel`() {
-    val viewModel = AuthViewModel()
+    val app = ApplicationProvider.getApplicationContext<android.app.Application>()
+    val viewModel = AuthViewModel(app)
     assertFalse(viewModel.uiState.value.isDarkMode)
     assertFalse(viewModel.uiState.value.isGuestMode)
 
